@@ -1,0 +1,6 @@
+struct User;
+
+fn main() {
+    let u: User = User {};
+    println!("Hello, World!");
+}

@@ -1,0 +1,222 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "CWind",
+  "scopeName": "source.cwind",
+  "fileTypes": [
+    "wind",
+    "wd",
+    "cwind",
+    "cwd"
+  ],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#attributes"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#declarations"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#types"
+    },
+    {
+      "include": "#constants"
+    },
+    {
+      "include": "#function-call"
+    },
+    {
+      "include": "#operators"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.cwind",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.cwind",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "attributes": {
+      "patterns": [
+        {
+          "name": "meta.attribute.cwind",
+          "begin": "#\\[",
+          "end": "\\]",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.attribute.begin.cwind"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.attribute.end.cwind"
+            }
+          }
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.cwind",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.cwind",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.cwind",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.cwind",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.cwind",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "constant.numeric.float.cwind",
+          "match": "\\b\\d+\\.\\d+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.cwind",
+          "match": "\\b\\d+\\b"
+        }
+      ]
+    },
+    "declarations": {
+      "patterns": [
+        {
+          "name": "meta.function.cwind",
+          "match": "\\b(fn)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.function.cwind"
+            },
+            "2": {
+              "name": "entity.name.function.cwind"
+            }
+          }
+        },
+        {
+          "name": "meta.declaration.cwind",
+          "match": "\\b(struct|enum|trait|extra|impl|type|typedef|group)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.cwind"
+            },
+            "2": {
+              "name": "entity.name.type.cwind"
+            }
+          }
+        },
+        {
+          "name": "meta.declaration.constant.cwind",
+          "match": "\\b(const)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.cwind"
+            },
+            "2": {
+              "name": "entity.name.constant.cwind"
+            }
+          }
+        },
+        {
+          "name": "meta.declaration.variable.cwind",
+          "match": "\\b(let)\\s+(mut\\s+)?([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.cwind"
+            },
+            "2": {
+              "name": "storage.modifier.cwind"
+            },
+            "3": {
+              "name": "variable.other.cwind"
+            }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.cwind",
+          "match": "\\b(if|elif|else|match|for|while|loop|in|return|break|continue)\\b"
+        },
+        {
+          "name": "keyword.other.cwind",
+          "match": "\\b(let|mut|fn|struct|enum|trait|extra|impl|const|static|extern|pub|mod|use|as|where|type|typedef|group|which|lambda|import|when|define|async|await)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.cwind",
+          "match": "\\b(Int8|Int16|Int32|Int64|Int|UInt8|UInt16|UInt32|UInt64|UInt|Float32|Float64|Float|Bool|Byte|String|Vector|Map|Set|Tuple|Iterator|Option|Result|Self)\\b"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.cwind",
+          "match": "\\b(true|false|None)\\b"
+        },
+        {
+          "name": "variable.language.cwind",
+          "match": "\\bself\\b"
+        }
+      ]
+    },
+    "function-call": {
+      "patterns": [
+        {
+          "name": "entity.name.function.cwind",
+          "match": "\\b[A-Za-z_][A-Za-z0-9_]*(?=\\s*\\()"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.cwind",
+          "match": "(===|==|!=|!<|!>|<=|>=|<<|>>|\\+=|-=|\\*=|/=|->|=>|::|&&|\\|\\||\\.\\.|\\*const|\\*mut|[+\\-*/%=<>!&|^~?])"
+        }
+      ]
+    }
+  }
+}

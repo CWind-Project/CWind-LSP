@@ -1,0 +1,147 @@
+{
+  "name": "cwind-lsp",
+  "displayName": "CWind Language Support",
+  "description": "CWind language support powered by the cwind-lsp language server",
+  "version": "0.0.1",
+  "publisher": "cwind-project",
+  "license": "BSD-3-Clause",
+  "repository": "https://github.com/cwind-project/CWind-LSP",
+  "engines": {
+    "vscode": ">=1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:cwind"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "cwind",
+        "aliases": [
+          "CWind",
+          "cwind"
+        ],
+        "extensions": [
+          ".wind",
+          ".wd",
+          ".cwind",
+          ".cwd"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "cwind",
+        "scopeName": "source.cwind",
+        "path": "./syntaxes/cwind.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "cwind.restartServer",
+        "title": "CWind: Restart Language Server"
+      },
+      {
+        "command": "cwind.showOutput",
+        "title": "CWind: Show Language Server Output"
+      }
+    ],
+    "configuration": {
+      "title": "CWind",
+      "properties": {
+        "cwind.serverPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the cwind-lsp executable. Empty = auto-detect (workspace .venv, CWIND_LSP_PATH, then PATH)."
+        },
+        "cwind.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Fallback Python interpreter used as `python -m cwind_lsp` when cwind-lsp itself cannot be located."
+        },
+        "cwind.serverArgs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "--stdio"
+          ],
+          "description": "Arguments passed to the language server."
+        },
+        "cwind.stdPath": {
+          "type": "string",
+          "default": "",
+          "description": "CWind installation root owning libs/ (equivalent to CWIND_HOME). Leave empty for auto-detection."
+        },
+        "cwind.targetOs": {
+          "type": "string",
+          "default": "",
+          "description": "Pin #[cfg(target_os)] evaluation, e.g. windows, linux, macos."
+        },
+        "cwind.targetArch": {
+          "type": "string",
+          "default": "",
+          "description": "Pin #[cfg(target_arch)] evaluation, e.g. x86_64, aarch64."
+        },
+        "cwind.targetVendor": {
+          "type": "string",
+          "default": "",
+          "description": "Pin #[cfg(target_vendor)] evaluation, e.g. pc, apple."
+        },
+        "cwind.targetPointerWidth": {
+          "type": "string",
+          "default": "",
+          "description": "Pin #[cfg(target_pointer_width)] evaluation, e.g. 64."
+        },
+        "cwind.noStd": {
+          "type": "boolean",
+          "default": false,
+          "description": "Analyse without the implicit std prelude."
+        },
+        "cwind.debounceMs": {
+          "type": "number",
+          "default": 350,
+          "description": "Delay before re-analysing after an edit, in milliseconds."
+        },
+        "cwind.diagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Publish compiler diagnostics."
+        },
+        "cwind.semanticTokens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable semantic highlighting."
+        },
+        "cwind.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Trace the communication between VS Code and the language server."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": ">=1.85.0",
+    "typescript": "^5.4.0"
+  }
+}
